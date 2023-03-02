@@ -4,7 +4,6 @@ const loadFeatures = async() =>{
     const data = await res.json();
     displayFeatures(data.data.tools);
 }
-
 const displayFeatures = features =>{
     const featuresContainer = document.getElementById('feature-container');
     features.forEach(feature => {
@@ -12,13 +11,20 @@ const displayFeatures = features =>{
        featureDiv.classList.add('col');
        featureDiv.innerHTML= `
        <div class="card h-100">
-                    <img src="${feature.image}" class="card-img-top" alt="...">
+                    
+                    <img src="${feature.image}" class="container rounded mx-auto d-block card-img-top mt-3 mb-3" alt="...">
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <h5>Feature</h5>
+                    <ol>
+                    <li>${feature.features[0]}</li>
+                    <li>${feature.features[1]}</li>
+                    <li>${feature.features[2]}</li>
+                    </ol>
                     </div>
                     <div class="card-footer">
-                      <small class="text-muted">Last updated 3 mins ago</small>
+                    <h5 class="card-title">${feature.id}. ${feature.name}</h5>
+                    <p class="card-description">${feature.description}</p>
+                      <small class="text-muted">${feature.published_in}</small>
                     </div>
                   </div>
        `;
@@ -26,3 +32,4 @@ const displayFeatures = features =>{
     })
 }
 loadFeatures();
+
