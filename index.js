@@ -11,14 +11,11 @@ const displayFeatures = features =>{
        featureDiv.classList.add('col');
        featureDiv.innerHTML= `
        <div class="card h-100">
-                    
                     <img src="${feature.image}" class="container rounded mx-auto d-block card-img-top mt-3 mb-3" alt="...">
                     <div class="card-body">
                     <h5>Feature</h5>
                     <ol>
-                    <li>${feature.features[0]}</li>
-                    <li>${feature.features[1]}</li>
-                    <li>${feature.features[2]}</li>
+                    ${listOfFeatures(feature.features)}
                     </ol>
                     </div>
                     <div class="card-footer">
@@ -32,4 +29,12 @@ const displayFeatures = features =>{
     })
 }
 loadFeatures();
+
+function listOfFeatures(arg){
+  let items="";
+  for(let i=0; i<arg.length;i++){
+   items  +=`<li>${arg[i]}</li>`;
+  }
+  return items;
+}
 
