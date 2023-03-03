@@ -54,6 +54,8 @@ function listOfFeatures(arg){
   return items;
 };
 
+
+
 /*
 const fetchModal = () =>{
   fetch("https://openapi.programming-hero.com/api/ai/tool/01?fbclid=IwAR1UsEDXezYLsWcOjlse5UtfJQiotmtznQauK4JR97leonl6LCGFVAypdTo")
