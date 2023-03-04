@@ -6,7 +6,7 @@ const loadFeatures = async() =>{
 }
 const displayFeatures = features =>{
     const featuresContainer = document.getElementById('feature-container');
-    features = features.slice(0,6);
+    //features = features.slice(0,6);
     const noFeature = document.getElementById('no-found-message');
     
     if(features.length === 0){
