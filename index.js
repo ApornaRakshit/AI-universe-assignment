@@ -1,25 +1,34 @@
-const loadFeatures = async() =>{
-    const url = `https://openapi.programming-hero.com/api/ai/tools`
-    const res = await fetch(url);
-    const data = await res.json();
-    displayFeatures(data.data.tools);
+
+
+const loadFeatures = () =>{
+
+  const url = `https://openapi.programming-hero.com/api/ai/tools`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data => 
+         displayFeatures(data.data.tools))
+
 }
-const displayFeatures = features =>{
+const seeAll = document.getElementById('btn-seeAll');
+
+
+function displayFeatures(features) {
     const featuresContainer = document.getElementById('feature-container');
-    //features = features.slice(0,6);
+    
     const noFeature = document.getElementById('no-found-message');
     
     if(features.length === 0){
-      noFeature.classList.remove('d-none')
+      noFeature.classList.remove('d-block')
     }
     else {
       noFeature.classList.add('d-none');
     }
-    //display all features
+    
+    
     features.forEach(feature => {
-       const featureDiv = document.createElement('div');
-       featureDiv.classList.add('col');
-       featureDiv.innerHTML= `
+        const featureDiv = document.createElement('div');
+        featureDiv.classList.add('col');
+        featureDiv.innerHTML = `
        <div class="card h-100">
                     <img src="${feature.image}" class="container rounded mx-auto d-block card-img-top mt-3 " alt="...">
                     <div class="card-body">
@@ -29,22 +38,23 @@ const displayFeatures = features =>{
                     </ol>
                     </div>
                     <div class="card-footer">
-                    <h5 class="card-title">${feature.id}.${feature.name}</h5>
+                    <h5 class="card-title">${feature.id}. ${feature.name}</h5>
                     <div class="d-flex justify-content-between">
                     <small class="text-muted">${feature.published_in}</small>
-                    
-                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-arrow-right"></i></button>
-                   
-                    
+                    <i class="fas fa-arrow-right" onclick="getDetail('${feature.id}')" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"></i>
                     </div>
                     </div>
                     </div>
                   </div>
        `;
        featuresContainer.appendChild(featureDiv);
-    })
+        
+    });
 }
+
 loadFeatures();
+
 
 function listOfFeatures(arg){
   let items="";
@@ -54,55 +64,58 @@ function listOfFeatures(arg){
   return items;
 };
 
-
-
-/*
-const fetchModal = () =>{
-  fetch("https://openapi.programming-hero.com/api/ai/tool/01?fbclid=IwAR1UsEDXezYLsWcOjlse5UtfJQiotmtznQauK4JR97leonl6LCGFVAypdTo")
-  .then((res)=>res.json())
-  .then((data)=>showCategories(data.data));
+const getDetail = id =>{
+  const url =` https://openapi.programming-hero.com/api/ai/tool/${id}`;
+  fetch(url)
+    .then(res => res.json())    
+    .then(data => showDetail(data.data));
 };
-fetchModal();
 
-const showCategories = data =>{
-  console.log(data)
+const showDetail = (detail) =>{
+
+  const {  description, image_link, input_output_examples, features, integrations, accuracy } = detail;
+  const modalContainer = document.getElementById('modal-body');
+  modalContainer.innerHTML= `
+  <div class="row">
+  <div class="col-sm-7 mb-3 mb-sm-0">
+  <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">${description}</h6>
+        
+        <div class="d-flex">
+        
+        <div>
+        <h5 class="card-title">Features</h5>
+        <ul><li><small>${features[1].feature_name}</small></li>
+        <li><small>${features[2].feature_name}</small></li>
+        <li><small>${features[3].feature_name}</small></li>
+        </ul></div>
+        
+        <div>
+        <h5 class="card-title">Integrations</h5>
+        <ul><li><small>${integrations[0]}</small></li>
+        <li><small>${integrations[1]}</small></li>
+        <li><small>${integrations[2]}</small></li>
+        </ul></div>
+</div>
+      </div>
+    </div>
+  
+  </div>
+  <div class="col-sm-5">
+  <div class="card">
+  <div><span id="acc-badge" class="badge bg-danger">${accuracy.score*100}% accuracy</span>
+  <img src=${image_link[0]} id="imgHeight" class="card-img-top" alt="..."></div>
+  <div class="card-body">
+    <p class="card-text">${input_output_examples[0].input}</p>
+    <small class="text-secondary lh-1">
+    ${input_output_examples[0].output}</small>
+  </div>
+</div>
+  </div>
+</div>
+  
+  `
   
 }
-*/
-/*
-const fetchCategories = () =>{fetch('https://openapi.programming-hero.com/api/ai/tool/01?fbclid=IwAR1UsEDXezYLsWcOjlse5UtfJQiotmtznQauK4JR97leonl6LCGFVAypdTo')
-.then((res)=>res.json())
-.then((data)=>
-displayCategories(data))}
-fetchCategories();
 
-const displayCategories = tools =>{
-  const modalContainer = document.getElementById('modal-container');
-  tools.function() 
-    
-  (tool=>{
-    const modalDiv = document.createElement('div');
-    modalDiv.classList.add('col');
-    modalDiv.innerHTML=`
-                        <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-    `;
-    modalContainer.appendChild(modalDiv);
-  })
-}
-*/
-
-
-
-
-
-
-
-
-
-
-//<button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-arrow-right"></i></button>
